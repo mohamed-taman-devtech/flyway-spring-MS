@@ -1,0 +1,1 @@
+CREATE OR REPLACE VIEW people AS SELECT id, name FROM user WHERE name like 'M%';

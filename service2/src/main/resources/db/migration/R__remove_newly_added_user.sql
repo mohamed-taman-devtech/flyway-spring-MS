@@ -1,0 +1,1 @@
+delete from service2.user where service2.user.name ="Malak Taman";
