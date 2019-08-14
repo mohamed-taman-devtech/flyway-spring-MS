@@ -11,7 +11,7 @@
 
 	<groupId>rs.com.siriusxi.devtech</groupId>
 	<artifactId>flyway-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>Latest</version>
 	<name>Flyway Parent POM</name>
 	<description>Demo project for Spring Boot application with flyway integrated as parent POM</description>
 	<packaging>pom</packaging>
