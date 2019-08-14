@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>rs.com.siriusxi.devtech</groupId>
 		<artifactId>flyway-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>Latest</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
