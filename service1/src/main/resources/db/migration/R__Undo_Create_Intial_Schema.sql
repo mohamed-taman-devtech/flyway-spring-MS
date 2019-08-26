@@ -1,2 +1,2 @@
 DROP VIEW people;
-DROP TABLE user;
+DROP TABLE user1;
