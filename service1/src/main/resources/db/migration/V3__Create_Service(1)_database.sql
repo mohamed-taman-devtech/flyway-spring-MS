@@ -4,9 +4,9 @@ create table if not exists customer (
    primary key (id)
 );
 
+insert into customer (name) values ('Dejan Jerkitj');
+insert into customer (name) values ('Goran Erhartič');
+insert into customer (name) values ('Ivan Vasiljevic');
 insert into customer (name) values ('Mohamed Taman');
-insert into customer (name) values ('Malik Taman');
-insert into customer (name) values ('Mariam Taman');
-insert into customer (name) values ('Malak Taman');
 
 CREATE OR REPLACE VIEW people AS SELECT id, name FROM customer;
