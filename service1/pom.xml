@@ -19,6 +19,33 @@
 
     <properties>
         <skipTests>false</skipTests>
-        <docker.skipRun>false</docker.skipRun>
+        <docker.db.skipRun>false</docker.db.skipRun>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!--
+                     It automatically creates the versioning information during a build
+                     so that you are able to verify the versioning information when
+                     an application is deployed
+                -->
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <!--
+                    It is the de facto standard way to handle
+                    versions management nowadays.
+                -->
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.7</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

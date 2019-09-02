@@ -25,7 +25,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <skipTests>true</skipTests>
-        <docker.skipRun>true</docker.skipRun>
+        <docker.db.skipRun>true</docker.db.skipRun>
 
         <!-- Self project properties -->
         <mysql.test.port>3306</mysql.test.port>
@@ -97,7 +97,7 @@
                 <version>${fabric8.docker.maven.plugin}</version>
                 <configuration>
                     <useColor>true</useColor>
-                    <skipRun>${docker.skipRun}</skipRun>
+                    <skipRun>${docker.db.skipRun}</skipRun>
                     <images>
                         <image>
                             <name>mysql:${mysql.db.version}</name>

@@ -10,7 +10,7 @@ import java.time.Instant;
 import java.util.List;
 
 @RestController()
-@RequestMapping("customers")
+@RequestMapping("service")
 public class CustomerController {
 
   private CustomerService customerService;
@@ -24,7 +24,7 @@ public class CustomerController {
         return "(Service 1) is Up & Running, ".concat(Instant.now().toString());
     }
 
-  @GetMapping
+  @GetMapping("customers")
   public List<Customer> getCustomerService() {
     return customerService.getCustomers();
   }
