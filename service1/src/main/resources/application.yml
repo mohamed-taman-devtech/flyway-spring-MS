@@ -37,6 +37,8 @@ spring:
       ddl-auto: validate
 
   flyway:
+    #Enable or disable flyway migrations
+    enabled: false
     url: jdbc:mysql://localhost:3306/mysql
     schemas: customer_service
     user: ${spring.datasource.username}
