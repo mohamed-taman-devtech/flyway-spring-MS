@@ -119,7 +119,7 @@
                                     Alternatively we can wait log- or tcp-based and try to connect for a while in the test code -->
 <!--                                    <time>${docker.db.wait.time}</time>-->
                                     <tcp>
-                                        <host>localhost</host>
+                                        <host>192.168.99.100</host>
                                         <ports>
                                             <port>3306</port>
                                         </ports>
