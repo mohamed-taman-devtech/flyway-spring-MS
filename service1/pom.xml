@@ -19,6 +19,6 @@
 
     <properties>
         <skipTests>false</skipTests>
-        <docker.db.skipRun>true</docker.db.skipRun>
+        <docker.db.skipRun>false</docker.db.skipRun>
     </properties>
 </project>
