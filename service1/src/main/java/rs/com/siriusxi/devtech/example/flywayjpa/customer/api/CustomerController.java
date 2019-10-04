@@ -1,5 +1,6 @@
 package rs.com.siriusxi.devtech.example.flywayjpa.customer.api;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class CustomerController {
   }
 
   @GetMapping("version")
+  @Cacheable("version")
   public String versionInformation() {
     return readGitProperties();
   }
