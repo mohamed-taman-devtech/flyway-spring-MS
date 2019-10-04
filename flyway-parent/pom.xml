@@ -28,7 +28,6 @@
         <!-- Skip tests & docker database instance from running -->
         <skipTests>true</skipTests>
         <docker.db.skipRun>true</docker.db.skipRun>
-        <git.dirty>true</git.dirty>
 
         <!-- Self project properties -->
         <mysql.test.port>3306</mysql.test.port>
@@ -93,7 +92,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <!-- running MySQL Container for testing -->
+            <!-- Start - running MySQL Container for testing -->
             <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
@@ -139,7 +138,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- running MySQL Container for testing -->
+            <!-- running MySQL Container for testing - End -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
