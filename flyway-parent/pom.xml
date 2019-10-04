@@ -117,14 +117,7 @@
                                     <!-- time based waiting is the only option, because TCP-based or log-based polling are not reliable.
                                     see https://github.com/fabric8io/docker-maven-plugin/issues/328
                                     Alternatively we can wait log- or tcp-based and try to connect for a while in the test code -->
-<!--                                    <time>${docker.db.wait.time}</time>-->
-                                    <tcp>
-                                        <host>192.168.99.100</host>
-                                        <ports>
-                                            <port>3306</port>
-                                        </ports>
-                                    </tcp>
-                                    <healthy>true</healthy>
+                                    <time>${docker.db.wait.time}</time>
                                 </wait>
                             </run>
                         </image>
