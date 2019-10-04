@@ -28,7 +28,7 @@
         <!-- Skip tests & docker database instance from running -->
         <skipTests>true</skipTests>
         <docker.db.skipRun>true</docker.db.skipRun>
-        <docker.db.wait.time>8000</docker.db.wait.time>
+        <docker.db.wait.time>18000</docker.db.wait.time>
 
         <!-- Self project properties -->
         <mysql.test.port>3306</mysql.test.port>
