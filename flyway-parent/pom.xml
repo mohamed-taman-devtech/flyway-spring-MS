@@ -33,7 +33,7 @@
         <mysql.test.port>3306</mysql.test.port>
         <mysql.test.pw>root</mysql.test.pw>
         <mysql.test.user>root</mysql.test.user>
-        <mysql.db.version>5.7</mysql.db.version>
+        <mysql.db.version>8.0.17</mysql.db.version>
 
         <!-- dependencies versions -->
         <fabric8.docker.version>0.31.0</fabric8.docker.version>
