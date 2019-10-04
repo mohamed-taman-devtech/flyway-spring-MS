@@ -28,12 +28,14 @@
         <!-- Skip tests & docker database instance from running -->
         <skipTests>true</skipTests>
         <docker.db.skipRun>true</docker.db.skipRun>
+        <docker.db.wait.time>8000</docker.db.wait.time>
 
         <!-- Self project properties -->
         <mysql.test.port>3306</mysql.test.port>
         <mysql.test.pw>root</mysql.test.pw>
         <mysql.test.user>root</mysql.test.user>
-        <mysql.db.version>8.0.17</mysql.db.version>
+<!--        <mysql.db.version>8.0.17</mysql.db.version>-->
+        <mysql.db.version>5.7.27</mysql.db.version>
 
         <!-- dependencies versions -->
         <fabric8.docker.version>0.31.0</fabric8.docker.version>
@@ -115,7 +117,7 @@
                                     <!-- time based waiting is the only option, because TCP-based or log-based polling are not reliable.
                                     see https://github.com/fabric8io/docker-maven-plugin/issues/328
                                     Alternatively we can wait log- or tcp-based and try to connect for a while in the test code -->
-                                    <time>18000</time>
+                                    <time>${docker.db.wait.time}</time>
                                 </wait>
                             </run>
                         </image>
