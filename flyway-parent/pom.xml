@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.0.M5</version>
+        <version>2.2.0.M6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -115,7 +115,7 @@
                                     <!-- time based waiting is the only option, because TCP-based or log-based polling are not reliable.
                                     see https://github.com/fabric8io/docker-maven-plugin/issues/328
                                     Alternatively we can wait log- or tcp-based and try to connect for a while in the test code -->
-                                    <time>8000</time>
+                                    <time>18000</time>
                                 </wait>
                             </run>
                         </image>
