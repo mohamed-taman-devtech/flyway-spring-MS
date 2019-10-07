@@ -1,20 +1,14 @@
-server:
-  port: 8081
-
 logging:
   level:
     org:
       hibernate: error
 
 spring:
-  application:
-    name: CustomerService
-
   datasource:
     ## You often do not need to specify the driver-class-name,
     ## since Spring Boot can deduce it for most databases from the url.
     #driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 'jdbc:mysql://localhost:3306/customer_service?useSSL=false&serverTimezone=UTC'
+    url: 'jdbc:mysql://localhost:6033/customer_service?useSSL=false&serverTimezone=UTC'
     username: 'root'
     password: 'root'
     platform: mysql
@@ -40,16 +34,7 @@ spring:
   flyway:
     #Enable or disable flyway migrations
     enabled: true
-    url: 'jdbc:mysql://localhost:3306/mysql'
+    url: 'jdbc:mysql://localhost:6033/mysql'
     schemas: customer_service
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
-
-management:
-  info:
-    git:
-      mode: full
-  endpoints:
-    web:
-      exposure:
-        include: '*'

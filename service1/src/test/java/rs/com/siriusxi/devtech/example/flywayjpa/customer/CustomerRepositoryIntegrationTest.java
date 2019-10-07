@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import rs.com.siriusxi.devtech.example.flywayjpa.customer.domain.Customer;
 import rs.com.siriusxi.devtech.example.flywayjpa.customer.repository.CustomerRepository;
@@ -16,6 +17,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
+@ActiveProfiles("test")
 class CustomerRepositoryIntegrationTest {
     @Autowired
     private TestEntityManager entityManager;
