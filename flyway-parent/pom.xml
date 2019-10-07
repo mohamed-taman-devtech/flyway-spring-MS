@@ -31,7 +31,7 @@
         <docker.db.wait.time>10000</docker.db.wait.time>
 
         <!-- Self project properties -->
-        <mysql.test.port>3306</mysql.test.port>
+        <mysql.test.port>6033</mysql.test.port>
         <mysql.test.pw>root</mysql.test.pw>
         <mysql.test.user>root</mysql.test.user>
 <!--        <mysql.db.version>8.0.17</mysql.db.version>-->
@@ -59,6 +59,10 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- Spring boot dependencies -->
         <!-- Project dependencies -->
@@ -93,6 +97,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <!-- To generate build information to be included via
+                            http://IP:port/actuator/info
+                             -->
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- Start - running MySQL Container for testing -->
             <plugin>
@@ -205,7 +219,10 @@
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
                     </generateGitPropertiesFilename>
-                    <format>json</format>
+                    <!-- Very important to make sure that the format is set to "properties"
+                    instead of "JSON" inorder to work with spring actuator -->
+                    <format>properties</format>
+<!--                    <format>json</format>-->
                     <gitDescribe>
                         <skip>false</skip>
                         <always>false</always>
