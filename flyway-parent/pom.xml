@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.0.M6</version>
+        <version>2.2.0.RC1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -25,6 +25,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
+        <!-- Spring dependencies -->
+        <spring-cloud.version>Hoxton.M3</spring-cloud.version>
+
         <!-- Skip tests & docker database instance from running -->
         <skipTests>true</skipTests>
         <docker.db.skipRun>true</docker.db.skipRun>
@@ -34,7 +37,7 @@
         <mysql.test.port>6033</mysql.test.port>
         <mysql.test.pw>root</mysql.test.pw>
         <mysql.test.user>root</mysql.test.user>
-<!--        <mysql.db.version>8.0.17</mysql.db.version>-->
+        <!-- <mysql.db.version>8.0.17</mysql.db.version> -->
         <mysql.db.version>5.7.27</mysql.db.version>
 
         <!-- dependencies versions -->
@@ -44,34 +47,45 @@
     </properties>
 
     <dependencies>
-        <!-- Spring boot dependencies -->
+        <!-- Start - Spring boot dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <!-- Add typical dependencies for a web application -->
+        <!-- Start - typical dependencies for a web application -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <!-- End - typical dependencies for a web application -->
+        <!--  Start - Developer utilities tools   -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <!-- End - Developer utilities tools -->
+        <!-- Start - Providing some useful infos about the service through REST API -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!-- Spring boot dependencies -->
+        <!-- End - Providing some useful infos about the service through REST API -->
+        <!-- Start - distributed tracing component instrumentation  -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-sleuth</artifactId>-->
+<!--        </dependency>-->
+        <!-- End - distributed tracing component instrumentation  -->
+        <!-- End - Spring boot dependencies -->
         <!-- Project dependencies -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
         <!-- Project dependencies -->
-        <!-- Database & its Migration dependencies -->
+        <!-- Start - Database & its Migration dependencies -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -81,14 +95,14 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- Database & its Migration dependencies -->
-        <!-- Testing dependencies -->
+        <!-- End - Database & its Migration dependencies -->
+        <!-- Start - Testing dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Testing dependencies -->
+        <!-- End - Testing dependencies -->
     </dependencies>
 
     <build>
@@ -154,7 +168,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- running MySQL Container for testing - End -->
+            <!-- End - running MySQL Container for testing -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -220,6 +234,7 @@
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
                     </generateGitPropertiesFilename>
                     <!-- Very important to make sure that the format is set to "properties"
+                    (which is the default value if format tag is omitted)
                     instead of "JSON" inorder to work with spring actuator -->
                     <format>properties</format>
 <!--                    <format>json</format>-->
@@ -232,7 +247,8 @@
                         <!-- verify that the current repository is not dirty -->
                         <validationProperty>
                             <name>validating git dirty</name>
-                            <value>${git.dirty}</value>
+<!--                            <value>${git.dirty}</value>-->
+                            <value>false</value>
                             <shouldMatchTo>false</shouldMatchTo>
                         </validationProperty>
                     </validationProperties>
@@ -250,6 +266,18 @@
         </plugins>
     </build>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <!-- Add Spring repositories -->
     <!-- (you don't need this if you are using a .RELEASE version) -->
     <repositories>
@@ -259,6 +287,7 @@
             <url>https://repo.spring.io/milestone</url>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>spring-milestones</id>

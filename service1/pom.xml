@@ -21,4 +21,10 @@
         <skipTests>false</skipTests>
         <docker.db.skipRun>false</docker.db.skipRun>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+    </dependencies>
 </project>

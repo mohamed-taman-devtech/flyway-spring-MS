@@ -3,8 +3,12 @@ server:
 
 logging:
   level:
+    web: debug
     org:
       hibernate: error
+      springframework:
+        cloud:
+          sleuth: debug
 
 spring:
   application:

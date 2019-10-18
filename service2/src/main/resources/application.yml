@@ -1,12 +1,19 @@
+logging:
+  level:
+    web: debug
+    org:
+      springframework:
+        cloud:
+          sleuth: debug
 spring:
   application:
-    name: Service-2
+    name: ContactDetails
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: 'jdbc:mysql://localhost:3306/service2?useSSL=false&serverTimezone=UTC'
+    url: 'jdbc:mysql://localhost:3306/customer_details?useSSL=false&serverTimezone=UTC'
     username: 'root'
-    password: 'admin'
+    password: 'root'
+    platform: mysql
     tomcat:
       test-while-idle: true
       test-on-borrow: true
@@ -18,19 +25,27 @@ spring:
   jpa:
     show-sql: true
     open-in-view: false
+    database: MYSQL
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        #dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQL57Dialect
     hibernate:
       ddl-auto: validate
 
   flyway:
-    url: jdbc:mysql://localhost:3306/mysql
-    schemas: service2
+    #Enable or disable flyway migrations
+    enabled: true
+    url: 'jdbc:mysql://localhost:3306/mysql'
+    schemas: customer_details
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 
-logging:
-  level:
-    org:
-      hibernate: error
+management:
+  info:
+    git:
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: '*'
