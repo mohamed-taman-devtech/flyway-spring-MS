@@ -5,9 +5,11 @@ logging:
       springframework:
         cloud:
           sleuth: debug
+        web: debug
+
 spring:
   application:
-    name: ContactDetails
+    name: Contact-Details
 
   datasource:
     url: 'jdbc:mysql://localhost:3306/customer_details?useSSL=false&serverTimezone=UTC'
@@ -41,11 +43,11 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
 
-management:
-  info:
-    git:
-      mode: full
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+  management:
+    info:
+      git:
+        mode: full
+    endpoints:
+      web:
+        exposure:
+          include: '*'

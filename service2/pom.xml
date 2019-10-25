@@ -15,11 +15,8 @@
 	<description>Demo project for Spring Boot application with flyway integrated</description>
 	<packaging>jar</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
-	</dependencies>
-
+	<properties>
+		<skipTests>false</skipTests>
+		<docker.db.skipRun>false</docker.db.skipRun>
+	</properties>
 </project>

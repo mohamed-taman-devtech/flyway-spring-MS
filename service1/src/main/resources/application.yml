@@ -7,12 +7,20 @@ logging:
     org:
       hibernate: error
       springframework:
+        web:
+          servlet:
+            DispatcherServlet: debug
         cloud:
           sleuth: debug
 
 spring:
+#  sleuth:
+#    sampler:
+#      probability: 1.0
+#      rate: 10
+
   application:
-    name: CustomerService
+    name: Customer-Service
 
   datasource:
     ## You often do not need to specify the driver-class-name,

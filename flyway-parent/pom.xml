@@ -72,30 +72,34 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!-- End - Providing some useful infos about the service through REST API -->
-        <!-- Start - distributed tracing component instrumentation  -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-sleuth</artifactId>-->
-<!--        </dependency>-->
-        <!-- End - distributed tracing component instrumentation  -->
+        <!-- Start - Sleuth automatically adds trace interceptors when in the classpath and
+        Zipkin starter Sends trace data to zipkin over http (defaults to
+        http://localhost:9411/api/v2/spans) -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+        </dependency>
+        <!-- End - Sends trace data to zipkin over http -->
         <!-- End - Spring boot dependencies -->
-        <!-- Project dependencies -->
+        <!-- Start - Projects dependencies -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- Project dependencies -->
-        <!-- Start - Database & its Migration dependencies -->
+        <!-- Start - Database migration dependencies -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
         </dependency>
+        <!-- End - Database migration dependencies -->
+        <!-- Start - Database driver for mysql -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- End - Database & its Migration dependencies -->
+        <!-- End - Database driver for mysql -->
+        <!-- End - Projects dependencies -->
         <!-- Start - Testing dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
