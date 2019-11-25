@@ -21,4 +21,11 @@
         <skipTests>false</skipTests>
         <docker.db.skipRun>false</docker.db.skipRun>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.hazelcast</groupId>
+            <artifactId>hazelcast</artifactId>
+        </dependency>
+    </dependencies>
 </project>
