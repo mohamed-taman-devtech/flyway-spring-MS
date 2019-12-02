@@ -33,3 +33,4 @@ spring:
     schemas: customer_service
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+    #init-sqls: 'SET GLOBAL MAX_CONNECTIONS = 1000'

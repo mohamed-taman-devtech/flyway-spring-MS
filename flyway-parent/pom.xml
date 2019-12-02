@@ -26,7 +26,7 @@
         <java.version>1.8</java.version>
 
         <!-- Spring dependencies -->
-        <spring-cloud.version>Hoxton.M3</spring-cloud.version>
+        <spring-cloud.version>Hoxton.RELEASE</spring-cloud.version>
 
         <!-- Skip tests & docker database instance from running -->
         <skipTests>true</skipTests>
@@ -42,8 +42,8 @@
 
         <!-- dependencies versions -->
         <fabric8.docker.version>0.31.0</fabric8.docker.version>
-        <org.apache.failsafe.version>3.0.0-M3</org.apache.failsafe.version>
-        <org.apache.surefire.version>3.0.0-M3</org.apache.surefire.version>
+        <org.apache.failsafe.version>3.0.0-M4</org.apache.failsafe.version>
+        <org.apache.surefire.version>3.0.0-M4</org.apache.surefire.version>
     </properties>
 
     <dependencies>
@@ -133,6 +133,7 @@
                 <version>${fabric8.docker.version}</version>
                 <configuration>
                     <useColor>true</useColor>
+                    <verbose>all</verbose>
                     <skipRun>${docker.db.skipRun}</skipRun>
                     <images>
                         <image>
@@ -142,6 +143,7 @@
                                 <env>
                                     <MYSQL_ROOT_PASSWORD>${mysql.test.pw}</MYSQL_ROOT_PASSWORD>
                                 </env>
+                                <cmd>--max-connections=1024</cmd>
                                 <ports>
                                     <port>${mysql.test.port}:3306</port>
                                 </ports>

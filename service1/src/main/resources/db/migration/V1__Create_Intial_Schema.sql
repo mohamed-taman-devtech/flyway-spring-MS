@@ -8,3 +8,4 @@ create table user1(
     name varchar(255) not null unique,
     primary key (id)
 );
+

@@ -2,6 +2,8 @@ package rs.com.siriusxi.devtech.example.flywayjpa.customer.api;
 
 import com.hazelcast.core.HazelcastInstance;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import rs.com.siriusxi.devtech.example.flywayjpa.customer.domain.Customer;
@@ -14,7 +16,10 @@ import java.io.InputStreamReader;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+
+//TODO add cacheable annotation, and xml configuration, set specific TTL with entry.
 @RestController()
 @RequestMapping("api")
 @Log4j2
@@ -23,6 +28,9 @@ public class CustomerController {
   private final CustomerService customerService;
   private final RestTemplate restTemplate;
   private final HazelcastInstance instance;
+
+  private final int ttl = 60;
+
 
   public CustomerController(CustomerService customerService,
                             RestTemplate restTemplate,
@@ -34,6 +42,7 @@ public class CustomerController {
   }
 
   @GetMapping("version")
+  @Cacheable("Configs")
   public String versionInformation() {
     return readGitProperties();
   }
@@ -75,15 +84,17 @@ public class CustomerController {
   }
 
 // Hazelcast Demo
-
   @GetMapping("customers/add")
   public String addCustomer(@RequestParam("key") String key,
                             @RequestParam("value") String value) {
 
-    instance.getMap("customers")    // get map from hazelcast cluster
-            // write value, This value will be accessible from another
-            // jvm also
-            .put(key, value);
+    // Get map from hazelcast cluster
+    instance.getMap("customers")
+            /*
+               1- Write value, This value will be accessible from another jvm also.
+               2- Add a ttl for 60 seconds for each entry for a cache that last forever.
+            */
+            .put(key, value, ttl, TimeUnit.SECONDS);
 
     return "Customer:" + value + " has been written to the Cache";
   }
@@ -119,6 +130,4 @@ public class CustomerController {
             .getMap("Configs")
             .get("data");
   }
-
-
 }

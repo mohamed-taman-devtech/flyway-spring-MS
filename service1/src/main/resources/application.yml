@@ -67,7 +67,6 @@ management:
         include: '*'
 
 # Service specific configurations
-# Hazelcast configuration
 customer:
   service:
     database:
@@ -75,8 +74,3 @@ customer:
       url: 'jdbc:mysql://localhost:3306/customer_service?${customer.service.database.prop}'
       flyway:
         url: 'jdbc:mysql://localhost:3306/mysql?${customer.service.database.prop}'
-    hazelcast:
-      name: 'configuration'
-      time-to-live: -1
-      heap-max-size: 200
-      eviction-policy: LRU
