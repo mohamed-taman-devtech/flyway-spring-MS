@@ -1,0 +1,38 @@
+server:
+  port: 9999
+
+# The routes configurations
+spring:
+  jackson:
+    default-property-inclusion: NON_NULL
+  cloud:
+    gateway:
+      routes:
+        - id: Customer-Service
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/Customer-Service/**
+
+        - id: Customer-Details
+          uri: http://localhost:8080/
+          predicates:
+              - Path=/Customer-Details/**
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: TRACE
+        http:
+          server:
+            reactive: DEBUG
+        web:
+          reactive: DEBUG
+    reactor:
+      ipc:
+        netty: DEBUG
+      netty: DEBUG
+
+management.endpoints.web.exposure.include: '*'
+management.endpoint.gateway.enabled: true # default value

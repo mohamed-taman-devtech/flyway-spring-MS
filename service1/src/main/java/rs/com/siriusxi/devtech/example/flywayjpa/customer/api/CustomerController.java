@@ -2,12 +2,13 @@ package rs.com.siriusxi.devtech.example.flywayjpa.customer.api;
 
 import com.hazelcast.core.HazelcastInstance;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import rs.com.siriusxi.devtech.example.flywayjpa.customer.domain.Customer;
 import rs.com.siriusxi.devtech.example.flywayjpa.customer.service.CustomerService;
+import rs.com.siriusxi.devtech.example.flywayjpa.infrastructure.handler.exception.EntityNotFoundException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,12 +17,15 @@ import java.io.InputStreamReader;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-
-//TODO add cacheable annotation, and xml configuration, set specific TTL with entry.
+//TODO add xml configuration.
 @RestController()
-@RequestMapping("api")
+@RequestMapping(
+        value = "api"
+        //consumes = MediaType.APPLICATION_JSON_VALUE)
+        , produces = MediaType.APPLICATION_JSON_VALUE)
 @Log4j2
 public class CustomerController {
 
@@ -76,7 +80,8 @@ public class CustomerController {
   @GetMapping("customers/details")
   public List<Customer> getCustomerService() {
     String customerDetails =
-            restTemplate.getForObject("http://localhost:8080/api/customer" + "/details", String.class);
+            restTemplate.getForObject("http://localhost:8080/Customer-Details/api/details",
+                    String.class);
 
     log.info("Received data from Customer details service {}", customerDetails);
 
@@ -103,16 +108,21 @@ public class CustomerController {
   public String readCustomer(@PathVariable("key") String key) {
     // get map from hazelcast, also notice it casted to a normal Java Map
     Map<String, String> customersMap = instance.getMap("customers");
-
-    // read customer value
-    return "Customer from Hazelcast cache is :" + customersMap.get(key);
+    // read customer value from cache first
+    return "Customer from Hazelcast cache is :" + Optional.ofNullable(customersMap.get(key))
+            // if not present in cache get it from database
+            .orElseGet(() ->  customerService
+                    .getCustomer(key)
+                    //If not present at all throw Entity not found exception
+                    .orElseThrow(() -> new EntityNotFoundException(Customer.class,
+                            "Key",key))
+                    .getName());
   }
 
   @GetMapping("customers")
   public Map<String, String> getAllCustomers() {
     return instance.getMap("customers");
   }
-
 
   // Another Hazelcast config cache
   @GetMapping("config/write")

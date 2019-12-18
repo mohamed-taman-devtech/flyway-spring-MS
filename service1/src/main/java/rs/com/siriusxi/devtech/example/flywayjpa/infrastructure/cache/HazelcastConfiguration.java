@@ -1,4 +1,4 @@
-package rs.com.siriusxi.devtech.example.flywayjpa.infrastructure;
+package rs.com.siriusxi.devtech.example.flywayjpa.infrastructure.cache;
 
 import com.hazelcast.config.*;
 import org.springframework.context.annotation.Bean;
@@ -12,9 +12,21 @@ public class HazelcastConfiguration {
 
     @Bean
     public Config hazelCastConfig() {
+
+        NetworkConfig network = new NetworkConfig();
+
+        JoinConfig join = network.getJoin();
+        join.getMulticastConfig().setEnabled(false);
+        join.getTcpIpConfig()
+                .addMember("localhost").setEnabled(true);
+
+        network.setPortAutoIncrement(true).setJoin(join).setPortCount(20);
+        
         return new Config()
                 //Set service instance name
                 .setInstanceName("customerService-cache-instance")
+                //Adding network configurations
+                .setNetworkConfig(network)
                 .addMapConfig(
                         new MapConfig() // create map
                                 .setName("customers")

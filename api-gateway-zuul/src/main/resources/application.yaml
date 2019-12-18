@@ -1,0 +1,17 @@
+server:
+  port: 9999
+
+spring:
+  application:
+    name: gateway-service
+
+ribbon:
+  eureka:
+    enabled: false
+
+zuul:
+  routes:
+    Customer-Service:
+      url: http://localhost:8081/Customer-Service/api
+    Customer-Details:
+      url: http://localhost:8080/Customer-Details

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomerDetailsApplication {
 
-	@GetMapping("api/customer/details")
+	@GetMapping("api/details")
 	public String details() {
 		return "Mohamed Mahmoud Taman Sr. Enterprise Architect";
 	}

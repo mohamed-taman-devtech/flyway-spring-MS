@@ -7,9 +7,13 @@ logging:
           sleuth: debug
         web: debug
 
+server:
+  servlet:
+    context-path: /${spring.application.name}/
+
 spring:
   application:
-    name: Contact-Details
+    name: Customer-Details
 
   datasource:
     url: 'jdbc:mysql://localhost:3306/customer_details?useSSL=false&serverTimezone=UTC'
@@ -38,7 +42,7 @@ spring:
   flyway:
     #Enable or disable flyway migrations
     enabled: true
-    url: 'jdbc:mysql://localhost:3306/mysql'
+    url: 'jdbc:mysql://localhost:3306/mysql?useSSL=false&serverTimezone=UTC'
     schemas: customer_details
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
