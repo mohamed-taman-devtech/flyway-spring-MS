@@ -29,7 +29,7 @@ spring:
   flyway:
     #Enable or disable flyway migrations
     enabled: true
-    url: 'jdbc:mysql://localhost:6033/mysql'
+    url: 'jdbc:mysql://localhost:6033/mysql?useSSL=false&serverTimezone=UTC'
     schemas: customer_service
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}

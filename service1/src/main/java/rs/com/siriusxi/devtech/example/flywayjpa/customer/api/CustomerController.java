@@ -33,9 +33,6 @@ public class CustomerController {
   private final RestTemplate restTemplate;
   private final HazelcastInstance instance;
 
-  private final int ttl = 60;
-
-
   public CustomerController(CustomerService customerService,
                             RestTemplate restTemplate,
                             HazelcastInstance instance) {
@@ -94,6 +91,7 @@ public class CustomerController {
                             @RequestParam("value") String value) {
 
     // Get map from hazelcast cluster
+    int ttl = 60;
     instance.getMap("customers")
             /*
                1- Write value, This value will be accessible from another jvm also.
@@ -101,7 +99,7 @@ public class CustomerController {
             */
             .put(key, value, ttl, TimeUnit.SECONDS);
 
-    return "Customer:" + value + " has been written to the Cache";
+    return "Customer: " + value + " has been written to the Cache.";
   }
 
   @GetMapping("customers/{key}")

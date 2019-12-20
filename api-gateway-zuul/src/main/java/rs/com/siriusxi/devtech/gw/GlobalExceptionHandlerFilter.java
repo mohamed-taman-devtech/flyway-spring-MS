@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
 
+import static java.util.Optional.ofNullable;
 import static org.springframework.http.HttpStatus.*;
 
 @Slf4j
@@ -36,19 +36,21 @@ public class GlobalExceptionHandlerFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
+        return false;
     }
 
     @Override
     public Object run() {
         final RequestContext ctx = RequestContext.getCurrentContext();
+        int status = ctx.getResponse().getStatus();
 
-        if (INTERNAL_SERVER_ERROR.value() == ctx.getResponse().getStatus()) {
+        if (INTERNAL_SERVER_ERROR.value() == status) {
             modifyResponse(ctx, INTERNAL_SERVER_ERROR);
-        }else if(NOT_FOUND.value() == ctx.getResponse().getStatus()){
-            modifyResponse(ctx,"Resource not found!", NOT_FOUND);
-        }else if (BAD_REQUEST.value() == ctx.getResponse().getStatus())
-            modifyResponse(ctx,"Bad Request!", BAD_REQUEST);
+        } else if (NOT_FOUND.value() == status) {
+            modifyResponse(ctx, "Resource not found!", NOT_FOUND);
+        } else if (BAD_REQUEST.value() == status)
+            modifyResponse(ctx, "Bad Request!", BAD_REQUEST);
+
         return null;
     }
 
@@ -60,24 +62,19 @@ public class GlobalExceptionHandlerFilter extends ZuulFilter {
         // remove error code to prevent further error handling in follow up filters
         ctx.remove(THROWABLE_KEY);
 
-        // Set response content type
-        ctx.getResponse().setContentType(contentType);
-
         // populate context with new response values
-        final String body = getPreviousResponseBody(ctx.getResponseDataStream());
-
-        ctx.setResponseBody(Optional.ofNullable(message).orElseGet(()->{
-            if(isJsonMessage(body))
-                return body;
-            else
-                return generalMessage;
-        }));
+        ctx.setResponseBody(buildJsonMessage(message,
+                getPreviousResponseBody(
+                        ctx.getResponseDataStream())));
 
         // can set any error code as excepted
         ctx.setResponseStatusCode(status.value());
 
-        log.error("Zuul failure detected: "+ ctx.getResponse().getStatus()+", Previous " +
-                "message: "+ ctx.getResponseBody());
+        // Set response content type
+        ctx.getResponse().setContentType(contentType);
+
+        log.error("Zuul failure detected: "+ ctx.getResponse().getStatus()+
+                ", message: "+ ctx.getResponseBody());
     }
 
     private String getPreviousResponseBody(InputStream is) {
@@ -97,15 +94,25 @@ public class GlobalExceptionHandlerFilter extends ZuulFilter {
         return message;
     }
 
-    private boolean isJsonMessage(String message){
+    private boolean isJson(String message) {
         boolean isValidJason = false;
-        try{
+        try {
             new ObjectMapper().readTree(message);
             isValidJason = true;
-
-        } catch(IOException  e){
-            log.error("Is not a valid JSON message",e);
+        } catch (IOException e) {
+            log.error("Is not a valid JSON message");
         }
         return isValidJason;
+    }
+
+    private String buildJsonMessage(String message, String body) {
+        // Create JSON Object objectNode
+        return new ObjectMapper()
+                .createObjectNode()
+                .put(
+                "error",
+                ofNullable(message)
+                        .orElseGet(() -> isJson(body) ? body : generalMessage))
+                .toString();
     }
 }
